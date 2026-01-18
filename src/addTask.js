@@ -8,7 +8,11 @@ import "react-datepicker/dist/react-datepicker.css";
 const AddTask = ({addTask}) => {
     const[taskName,setTaskName] = useState("");
     const[des,setDes] = useState("");
-    const [date,setDate] = useState(new Date());
+
+    const indianDate = new Date().toLocaleString("en-US", {
+            timeZone: "Asia/Kolkata"
+        });
+    const [date,setDate] = useState();
     const navigate = useNavigate();
 
     const handleSubmit = (event) => { 
@@ -19,7 +23,7 @@ const AddTask = ({addTask}) => {
         {/*const year = date.getFullYear();*/}
         const dayName = date.toLocaleString('default',{weekday:'short'});
         //const format = `${dayName} , ${day}-${month}`;
-        const dateForm = date.toISOString();
+        const dateForm = `${dayName}, ${day}-${month}`;
 
         addTask(taskName,des,dateForm);
         setTaskName("");
@@ -60,7 +64,7 @@ const AddTask = ({addTask}) => {
                             selected={date}
                             onChange={(selectedDate)=>setDate(selectedDate)}
                             dateFormat={"dd/MM/yyyy"}
-                            minDate={new Date()}
+                            minDate={new Date(indianDate)}
                         />
 
                         <button type="submit">Create Task</button>

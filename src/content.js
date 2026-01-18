@@ -12,6 +12,16 @@ const ToDoList = ({List,deleteTask,fetchError,isLoading,handleComplete}) => {
    
     };
 
+    const displayDate = (rawDate)=>{
+        const dateObj = rawDate.toDate?rawDate.toDate():new Date(rawDate);
+        return dateObj.toLocaleString('en-IN',{
+            weekday:'short',
+            day:'numeric',
+            month:'short',
+            timeZone:'Asia/Kolkata'
+        });
+    };
+
  return (
     <>
     <div className="navigate">
@@ -28,6 +38,7 @@ const ToDoList = ({List,deleteTask,fetchError,isLoading,handleComplete}) => {
             deleteTask={deleteTask}
             showDesc={showDesc}
             showDescription={showDescription}
+            displayDate={displayDate}
             fetchError={fetchError}
             isLoading={isLoading}
             handleComplete={handleComplete}
@@ -37,7 +48,7 @@ const ToDoList = ({List,deleteTask,fetchError,isLoading,handleComplete}) => {
 }
 
 
-function Content({List,deleteTask,showDesc,showDescription,fetchError,isLoading,handleComplete}){
+function Content({List,deleteTask,showDesc,showDescription,fetchError,isLoading,handleComplete,displayDate}){
 
     const sortedList=[...List].sort((a,b)=>{
         return new Date(a.Date) - new Date(b.Date);
@@ -56,7 +67,7 @@ function Content({List,deleteTask,showDesc,showDescription,fetchError,isLoading,
                           <input type="checkbox" checked={t.Completed} onChange={()=>handleComplete(t.id,t.Completed)} className='checkbox'/>  
                           <div className={`taskName ${t.Completed ? 'completed' : ''}`} style={{display:'flex', flexDirection:'row',gap:'30px'}}>
                             <p >{t.Task}</p>
-                            <p className='dueDate'>{t.Date}</p>
+                            <p className='dueDate'>{displayDate(t.Date)}</p>
                           </div>
             
                             {showDesc === t.id ? 
