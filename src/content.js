@@ -50,8 +50,11 @@ const ToDoList = ({List,deleteTask,fetchError,isLoading,handleComplete}) => {
 
 function Content({List,deleteTask,showDesc,showDescription,fetchError,isLoading,handleComplete,displayDate}){
 
-    const sortedList=[...List].sort((a,b)=>{
-        return new Date(a.Date) - new Date(b.Date);
+    const sortedList = [...List].sort((a, b) => {
+        // Handle if date is a Firebase Timestamp or a Date object/string
+        const dA = new Date(a.Date).getTime();
+        const dB = new Date(b.Date).getTime();
+        return dA - dB; // Sorts earliest date to latest date
     });
 
     return (
