@@ -1,0 +1,125 @@
+.timer-page{
+    display:flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.navigate{
+   align-items: center;
+   color:white;
+}
+
+.actual-content{
+    padding:20px;
+    margin: auto;
+}
+
+.form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+    width: 350px; 
+}
+
+.time-format{
+    font-size: 65px;
+    font-weight: 800;
+    margin: 60px;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.158);
+    background:linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border:1px solid rgba(255, 255, 255, 0.408);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3),
+                0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.content{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+button{
+    background:linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border:1px solid rgba(255, 255, 255, 0.408);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3),
+                0 1px 2px rgba(255, 255, 255, 0.1);
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+.form input, 
+.form textarea, 
+.input input {
+    background: rgba(255, 255, 255, 0.08); 
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    border-radius: 15px;
+    color: white;
+    padding: 12px 15px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.form input:focus, 
+.form textarea:focus, 
+.input input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+/* General styling for main action buttons */
+.form button[type="submit"], 
+.control button:first-child {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+}
+
+.form button[type="submit"]:hover, 
+.control button:first-child:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+}
+
+.form button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* Styling for Cancel and Reset buttons */
+.form button[type="button"], 
+.control button:last-child {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    margin-left: 10px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.form button[type="button"]:hover, 
+.control button:last-child:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+}

@@ -1,0 +1,67 @@
+.newTask{
+    display:flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.navigate{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-around;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.form{
+    align-items: center;
+    background:linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border:1px solid rgba(255, 255, 255, 0.408);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    max-width: min-content ;
+    gap: 10px;
+    padding: 20px;
+    color:white;
+    border-radius: 20px;
+    margin: 20px auto;
+    flex-grow: 1;
+}
+.form label{
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    margin-top: 15px;
+}
+.form input{
+    background:transparent;
+    border-radius: 15px;
+    border:2px solid rgba(81, 81, 81, 0.13);
+    color: white;
+    padding: 12px;
+    font-size: 15px;
+}
+.form textarea{
+    min-height: fit-content;
+    min-width: max-content;
+    background:transparent;
+    border-radius: 15px;
+    border:2px solid rgba(81, 81, 81, 0.13);
+    color: white;
+    padding: 12px;
+    font-size: 15px;
+}
+
+.form input:focus, 
+.form textarea:focus, 
+.input input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.submit,.delete{
+    border-radius: 15px;
+    padding:5px;
+    background: transparent;
+}

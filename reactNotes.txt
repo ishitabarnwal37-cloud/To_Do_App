@@ -1,0 +1,161 @@
+React Notes :
+ - instead of class use className for css
+ - We can import images as objects.Example logo.svg becomes logo
+ - Page will not render a boolean 
+ - {/* to comment something */}
+ - Index.js will render the page 
+ - App.js will have the main workings of page 
+ - for small app we can have only 1 css file 
+ - import useState from 'react' - changes state of components 
+ const {name,setName} - name:current state
+                        setName:the setter function
+useState(data for default state )
+setName() - to modify the state 
+Example : const {count,setCount} = useState(0)
+setCount(count+1) 
+console.log(count+1) --- will give 0 as output 
+ - State = memory for components = this is exported as parent component
+ - setState = tell React “something changed”
+ - we can't directly change attribute of array because then setter function won't find anything changed
+
+ - we need to make a new array and then update the attribute with the setter function
+    - function Content({appFunctions,changeComplete}) as react can only pass 1 argument
+
+ - To pass a function with a parameter , we use a anonymous function 
+ like onChange = {() => handlCheck(item.id)}
+ [Anonymous function  is function without a name]
+
+ - listing the items : list.map((item) => item.id === id ? {...item, checked: !items.checked})
+ [if item.id is equal to id then flip check status]
+
+ - localStorage.setItem('nameOfFile',JSON.stringify(listItem)) : allows the user data to be saved persisting even after browser is closed
+ - to acces the data , use stored = JSON.getItem('nameOfFile');
+                           retrieved = JSON.parse(stored);
+
+
+{
+            id:1,
+            Task : "Input task",
+            Completed : false,
+            Description:"Should show up a form to fill when the plus button is clicked"
+        },
+        {
+            id:2,
+            Task : "Task Display",
+            Completed : false,
+            Description : "The tasks should be displayed with addition to new task with only title on the card"
+        },
+        {
+            id:3,
+            Task : "Mark Complete",
+            Completed : false,
+            Description:"Be able to mark the tasks as completed but not deleted"
+        },
+        {
+            id:4,
+            Task : "Delete Task",
+            Completed : false,
+            Description:"Be able to remove task from array and display , even before completion"
+        },
+        {
+            id:5,
+            Task : "Progress Display",
+            Completed : false,
+            Description:"Color of card should change when started,in progress and completed "
+        },
+        {
+            id:6,
+            Task : "Due date",
+            Completed : false,
+            Description:"Should be able to enter due date and notify when close to it"
+        },
+        {
+            id:7,
+            Task : "Priority Tagging",
+            Completed : false,
+            Description:"The tasks should rearrange themselves with important tasks on top and with a different tag"
+        }
+
+- Components are isolated by default—they don't know what's happening in other "bricks." 
+- they share information using props 
+- App.js is the parent and addTask.js and content.js are the children.
+- The list , fetch error and isLoading are like global variables and addtask and deleteTask are like global methods
+
+
+
+Code deleted from app.js to incorporate a firebase. 
+
+      const API_URL = 'http://localhost:3500/List'; 
+      const [List,updateList] = useState(() => {return []});  {/*condition in asynchronous function to return a savedList or to show a empty array in List*/}
+      const [fetchError,setFetchError] = useState(null);
+      const [isLoading,setIsLoading] = useState(true);
+
+    useEffect(() => { {/*gets list from database*/}
+       const taskRef = ref(db,'tasks/');
+       const fetchTasks = async() => { {/*async function returns a prommise. If function retruns a value then promise fulfilled.
+        If it returns a error promise is not fulfilled */}
+        try{
+            const response = await fetch(API_URL) 
+            {/*await keyword is used in async function to pause the execution of function till the 
+                promise or other await operation is happening. */}
+                if (!response.ok) throw Error("Could not get data");
+            const tasks = await response.json();
+            console.log(tasks)
+            updateList(tasks);
+            setFetchError(null);
+        } catch(err){
+            setFetchError(err.message);
+        }finally{
+            setIsLoading(false);
+        }
+       }
+       fetchTasks();
+    },[]);
+    
+    const addTask = async (name,description,date) => { {/* addTask function by creating the template of a new task and appending it to list array */}
+            const newTask = {
+                Task : name,
+                Description : description,
+                Date : date,
+                Completed : false
+            };
+
+           {/* updateList(List => [...List,newTask]);
+            setFormVisible(false);*/}
+    
+            const postOptions = {
+                method:'POST',
+                headers : {
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify(newTask)
+            }
+            try{ {/*this code added  as the task is added without a id.
+                savedTask will only get the task once it is saved to the database 
+                and then UI will get updated*/}
+                const res = await fetch(API_URL,postOptions);
+                if (!res.ok) throw Error("failed to add task");
+                const savedTask = await res.json()
+                updateList(prev => [...prev,savedTask]);
+                setFetchError(null);
+            }
+            catch(err){
+                setFetchError(err.message);
+            }
+        };
+
+     const deleteTask = async (idToDelete) => {
+             const prevList = List;
+             const newList = prevList.filter((task) => task.id !== idToDelete); 
+             {/* function 'deletes' task  by creating new list with all tasks except the one with id to delete. 
+                 Can't modify the original array as react won't see it as a change (react checks change by seeing if reference to arrayhas changed). 
+                 It will show the old list itself */}
+             updateList(newList);
+             
+             const delete_URL = `${API_URL}/${idToDelete}`;
+             const deleteOptions = {
+                 method:'DELETE',
+             };
+             const result = await apiRequest(delete_URL,deleteOptions);
+             if (result) setFetchError(result);
+         };
