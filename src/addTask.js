@@ -18,13 +18,13 @@ const AddTask = ({addTask}) => {
     const handleSubmit = (event) => { 
         event.preventDefault(); {/*it stops the page from reloading and lets the website use the data to print new task*/}
         
-        //const day = date.getDate();
-        //const month = date.toLocaleString('default',{month:'short'});
+        const day = date.getDate();
+        const month = date.toLocaleString('default',{month:'short'});
         {/*const year = date.getFullYear();*/}
-        //const dayName = date.toLocaleString('default',{weekday:'short'});
-        //const dateForm = `${dayName}, ${day}-${month}`;
+        const dayName = date.toLocaleString('default',{weekday:'short'});
+        const dateForm = `${dayName}, ${day}-${month}`;
         if(!date) return;
-        addTask(taskName,des,date);
+        addTask(taskName,des,dateForm);
         setTaskName("");
         setDes("");
         setDate(new Date());

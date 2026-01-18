@@ -13,13 +13,26 @@ const ToDoList = ({List,deleteTask,fetchError,isLoading,handleComplete}) => {
     };
 
     const displayDate = (rawDate)=>{
-        const dateObj = rawDate.toDate?rawDate.toDate():new Date(rawDate);
-        return dateObj.toLocaleString('en-IN',{
-            weekday:'short',
-            day:'numeric',
-            month:'short',
-            timeZone:'Asia/Kolkata'
+
+        if (!rawDate) {
+        return "Loading..."; 
+    }
+
+    try {
+        // 2. Determine if it's a Firebase Timestamp or a standard Date
+        const dateObj = rawDate.toDate ? rawDate.toDate() : new Date(rawDate);
+
+        // 3. Format it for India Time
+        return dateObj.toLocaleString('en-IN', {
+            weekday: 'short',
+            day: 'numeric',
+            month: 'short',
+            timeZone: 'Asia/Kolkata'
         });
+    } catch (error) {
+        console.error("Error formatting date:", error);
+        return "Invalid Date";
+    }
     };
 
  return (
@@ -50,20 +63,13 @@ const ToDoList = ({List,deleteTask,fetchError,isLoading,handleComplete}) => {
 
 function Content({List,deleteTask,showDesc,showDescription,fetchError,isLoading,handleComplete,displayDate}){
 
-    const sortedList = [...List].sort((a, b) => {
-        // Handle if date is a Firebase Timestamp or a Date object/string
-        const dA = new Date(a.Date).getTime();
-        const dB = new Date(b.Date).getTime();
-        return dA - dB; // Sorts earliest date to latest date
-    });
-
     return (
     <div className = "content">
      <div className = "list">
         {fetchError && <p align="center">{'Error : '+fetchError}</p>}
-        {sortedList.length ? (
+        {List.length ? (
             <ul>
-                {!fetchError && sortedList.map((t) => (  
+                {!fetchError && List.map((t) => (  
                 <li className="listItem" key={t.id}>
                     <div className='task-main'>
                         <div className='heading'>
