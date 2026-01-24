@@ -48,13 +48,13 @@ function App() {
     useEffect(()=>{
         const timer = setInterval(()=>{
             setCurrentTime(new Date());
-
         },6000);
         return ()=>clearInterval(timer);
     },[]);
 
     const currentHour  = currentTime.getHours();
-    const isNight = (currentHour>18 || currentHour<5);
+    console.log(currentHour);
+    const isNight = (currentHour>=18 || currentHour<5);
     const bgStyle={
             backgroundImage: `url(${isNight ? Night : Day})`, 
             backgroundSize:'cover', // 
